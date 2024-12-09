@@ -1,0 +1,33 @@
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2.18.0
+    ports:
+      - 9200:9200
+      - 9600:9600
+    environment:
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}    # required for OpenSearch 2.12 and later
+      - "discovery.type=single-node"
+      - "plugins.security.disabled=true"
+      - "compatibility.override_main_response_version=true"
+    networks:
+      - opensearch-net # All of the containers will join the same Docker bridge network
+    volumes:
+      - opensearch-volume:/usr/share/opensearch/data
+
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.18.0
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      OPENSEARCH_HOSTS: '["http://opensearch:9200"]'
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: "true"
+    networks:
+      - opensearch-net # All of the containers will join the same Docker bridge network
+
+networks:
+  opensearch-net:
+  
+volumes:
+  opensearch-volume:

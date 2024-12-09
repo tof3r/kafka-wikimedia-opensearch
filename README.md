@@ -1,4 +1,5 @@
 # Wikimedia-Kafka-OpenSearch
+Project utilizes Kafka to transfer data between two systems.
 
 Wikimedia recent changes stream is processed and send to Kafka.
 Records from Kafka are consumed and indexed using OpenSearch.
@@ -38,5 +39,7 @@ Records from Kafka are consumed and indexed using OpenSearch.
 }
 ```
 - In web browser navigate to the `http://localhost:5601/app/dev_tools#/console` to see the OpenSearch dashboard and play with data indexed by `OpenSearchConsumer`
+
+### Stop the Docker containers
 - To stop OpenSearch containers run `docker-compose down`
 - To stop Kafka broker run `docker stop broker`
